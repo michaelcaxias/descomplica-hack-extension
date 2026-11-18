@@ -33,7 +33,7 @@ Possui uma engenharia nativa diferente da página regular de exercícios que exi
 Utilizado em cenários onde a validação das questões recai sobre funções nativas executadas em tempo real pelas validações de exercícios extras, usando `this.currentQuestionReply()` e `this.exerciseAlternativeId`. A `ObjectiveTriviaStrategy` engaveta toda a camada desse cenário isoladamente e também detém suporte para Auto-Select.
 
 ### 4. `ClozeQuestion` (Questões de Preenchimento / Lacunas)
-Detecta cenários contendo as famosas tags `select` (_Lacunas_ de preenchimento de palavras). Como a arquitetura não usa alternativas clicáveis `li`, o Objeto DOM deste componente não possui a função de estilos `getAlternativeClass`. O rastreador age injetando um auto-preenchimento no valor do `<select>` compatível com as respostas da propriedade nativa `vm.question.alternatives`, preenchendo o _DOM_ e emitindo os sinais compatíveis do _Vue Router_ para prosseguir com o formulário.
+Detecta cenários contendo as famosas tags `select` (_Lacunas_ de preenchimento de palavras). Como a arquitetura não usa alternativas clicáveis `li`, o rastreador usa a alternativa correta de `vm.question.alternatives` e chama o método nativo `changeSelected`. Esse método emite o ID da pergunta e o ID da alternativa para o formulário pai, atualizando `selectedOptions` e habilitando o botão de envio quando todas as lacunas estiverem preenchidas. O destaque visual é aplicado separadamente no elemento da questão.
 
 ---
 
