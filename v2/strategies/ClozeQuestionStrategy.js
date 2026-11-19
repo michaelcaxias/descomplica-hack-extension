@@ -4,37 +4,41 @@ class ClozeQuestionStrategy {
     }
 
     execute(vm) {
-        if (vm.__isOverridden || vm.replyState == "correct") return;
+        if (vm.__descoClozeStrategyInstalled) return;
 
-        console.log("[Extesion] 'CLOZE QUESTION' strategy activated! Filling select...");
+        console.log("[Extension] 'CLOZE QUESTION' strategy activated!");
+        vm.__descoClozeStrategyInstalled = true;
 
-        // Aguarda a renderização dos componentes internos
-        setTimeout(() => {
-            // Verifica se o modelo do Vue contém a lista de alternativas e injeta-o direto na UI
-            if (vm.question && Array.isArray(vm.question.alternatives)) {
-                // Filtra as propriedades e encontra qual é o ID da resposta verdadeira
-                const correctAlt = vm.question.alternatives.find(alt => alt.correct);
+        const selectCorrectAnswer = () => {
+            if (vm.locked || vm.replyState === 'correct') return;
 
-                if (correctAlt) {
-                    // Preenche o campo select visualmente manipulando o DOM para garantir a alteração visual
-                    if (vm.$el) {
-                        const selectElement = vm.$el.querySelector('select');
-                        if (selectElement && selectElement.value !== String(correctAlt.id)) {
-                            selectElement.value = correctAlt.id;
-                            // Envia um Evento que notifica aos listeners do Vue (como o v-model) que a opção mudou
-                            selectElement.dispatchEvent(new Event('change', { bubbles: true }));
-                        }
+            const alternatives = vm.question && vm.question.alternatives;
+            const correctAlternative = Array.isArray(alternatives)
+                ? alternatives.find(alternative => alternative.correct)
+                : null;
 
-                        // Aplica o Box-Shadow de degradê e o tom em toda a caixa (já que não há o `li` aqui)
-                        vm.$el.classList.add('question__alternative--correct-animated');
-                    }
+            if (!correctAlternative || typeof vm.changeSelected !== 'function') return;
 
-                    // Emite o gatilho principal de evento que a própria documentação apontou em ($listeners: select: ƒ) apontando o id coreto para os dados do pai
-                    vm.$emit('select', correctAlt.id);
-                }
-            }
-        }, 300); // 300ms de preempção garantam que o HTML carregou totalmente as caixas e IDs
+            // ClozeQuestion.changeSelected emits (questionId, alternativeId).
+            // Calling it updates ObjectivePractice.selectedOptions, which is
+            // the state used by the parent to enable the submit button.
+            vm.changeSelected(correctAlternative.id);
 
-        vm.__isOverridden = true;
+            const highlight = () => {
+                if (vm.$el) vm.$el.classList.add('question__alternative--correct-animated');
+            };
+            if (typeof vm.$nextTick === 'function') vm.$nextTick(highlight);
+            else highlight();
+        };
+
+        selectCorrectAnswer();
+
+        // The activity enters Edit mode after the user clicks its Edit button.
+        // Reapply then, since the question components can already be mounted
+        // while their selects are locked in the viewing state.
+        if (typeof vm.$watch === 'function') {
+            vm.$watch('locked', selectCorrectAnswer);
+            vm.$watch('replyState', selectCorrectAnswer);
+        }
     }
 }
