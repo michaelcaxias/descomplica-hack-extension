@@ -30,6 +30,15 @@ Dentre as opções, ao ser selecionada o próprio `Service Worker` guardará a e
 - **V1 - XHR Network:** Muda a "marcha" para a engine de escavação de respostas cruas API e logs profundos retrocompatível com a primeira versão desenvolvida de API Hook.
 - **Desligar Extensão:** Precisa "estudar na raça" sem precisar desligar a extensão indo até opções de browser? Selecionar esse menu faz o JavaScript da plataforma simplesmente não ser interrompido e você joga limpo de acordo com as regras triviais como se fosse uma conta convencional (Recomendamos ao checar aprendizado bruto após leitura teórica de PDFs dos tutoriais)!
 
+### ⚡ Otimizar página (opcional)
+Um checkbox à parte, independente do motor escolhido (e do modo "Desligar"), que deixa o site mais leve. Vem **desligado** por padrão; recarregue a página (F5) depois de mudar.
+- Bloqueia scripts de terceiros que não são usados (HubSpot, smartbanner, VLibras, Mixpanel).
+- Carrega o player Kaltura (~750 KB, antes bloqueante no `<head>`) só nas aulas.
+- Dá cache longo aos JS/CSS com hash no nome.
+- Faz **Voltar/Avançar** do navegador navegarem entre as etapas da aula (antes saía da aula direto) e adiciona os atalhos `[` e `]` (etapa anterior/próxima).
+
+Nas medições (Brave 153, carga fria) o DOMContentLoaded caiu ~40% e a página de disciplinas baixou ~16% menos bytes. O chunk principal do site (~5 MB) não dá para remover pela extensão.
+
 > **🚨 Aviso Importante ao Trocar de Versões:** As duas versões usam arquiteturas diferentes (V1 injeta na raíz antes do carregamento via mundo _ISOLATED_, e a V2 injeta no fechamento da documentação diretamente no _MAIN_ do site da Descomplica para agir no DOM já renderizado). Portanto, quando fizer uma seleção diferente no Popup Switcher, a mensagem subirá alertando que é **obrigatório atualizar a tela (F5)** atual do Descomplica de imediato para a troca do roteamento base se acomodar sem sobreposições ou quebras. 
 
 ## ⚙️ Os Motores (Architectures)

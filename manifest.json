@@ -5,10 +5,13 @@
     "description": "Menu de alternância entre as táticas V1 (Network) e V2 (Design Patterns Vue)",
     "permissions": [
         "storage",
-        "scripting"
+        "scripting",
+        "declarativeNetRequest"
     ],
     "host_permissions": [
-        "*://aulas.descomplica.com.br/*"
+        "*://aulas.descomplica.com.br/*",
+        "*://*.descomplica.com.br/*",
+        "https://cdnapisec.kaltura.com/*"
     ],
     "background": {
         "service_worker": "background.js"
@@ -24,6 +27,46 @@
             "matches": [
                 "*://aulas.descomplica.com.br/*"
             ]
+        }
+    ],
+    "declarative_net_request": {
+        "rule_resources": [
+            {
+                "id": "opt_kaltura",
+                "enabled": false,
+                "path": "optimizer/rules_kaltura.json"
+            },
+            {
+                "id": "opt_block3p",
+                "enabled": false,
+                "path": "optimizer/rules_block3p.json"
+            },
+            {
+                "id": "opt_cache",
+                "enabled": false,
+                "path": "optimizer/rules_cache.json"
+            }
+        ]
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://aulas.descomplica.com.br/graduacao/*"
+            ],
+            "js": [
+                "optimizer/content_main.js"
+            ],
+            "run_at": "document_start",
+            "world": "MAIN"
+        },
+        {
+            "matches": [
+                "https://aulas.descomplica.com.br/graduacao/*"
+            ],
+            "js": [
+                "optimizer/content_iso.js"
+            ],
+            "run_at": "document_start"
         }
     ]
 }

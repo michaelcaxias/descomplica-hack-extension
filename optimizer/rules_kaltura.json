@@ -1,0 +1,15 @@
+[
+ {
+  "id": 1,
+  "priority": 1,
+  "action": {
+   "type": "block"
+  },
+  "condition": {
+   "initiatorDomains": [
+    "aulas.descomplica.com.br"
+   ],
+   "regexFilter": "^https://cdnapisec\\.kaltura\\.com/p/1612851/embedPlaykitJs/uiconf_id/47228233$"
+  }
+ }
+]

@@ -1,0 +1,119 @@
+[
+ {
+  "id": 1,
+  "priority": 1,
+  "action": {
+   "type": "block"
+  },
+  "condition": {
+   "initiatorDomains": [
+    "aulas.descomplica.com.br"
+   ],
+   "urlFilter": "||js.usemessages.com^"
+  }
+ },
+ {
+  "id": 2,
+  "priority": 1,
+  "action": {
+   "type": "block"
+  },
+  "condition": {
+   "initiatorDomains": [
+    "aulas.descomplica.com.br"
+   ],
+   "urlFilter": "||js.hs-scripts.com^"
+  }
+ },
+ {
+  "id": 3,
+  "priority": 1,
+  "action": {
+   "type": "block"
+  },
+  "condition": {
+   "initiatorDomains": [
+    "aulas.descomplica.com.br"
+   ],
+   "urlFilter": "||js.hs-banner.com^"
+  }
+ },
+ {
+  "id": 4,
+  "priority": 1,
+  "action": {
+   "type": "block"
+  },
+  "condition": {
+   "initiatorDomains": [
+    "aulas.descomplica.com.br"
+   ],
+   "urlFilter": "||js.hs-analytics.net^"
+  }
+ },
+ {
+  "id": 5,
+  "priority": 1,
+  "action": {
+   "type": "block"
+  },
+  "condition": {
+   "initiatorDomains": [
+    "aulas.descomplica.com.br"
+   ],
+   "urlFilter": "||api.hubspot.com/livechat-public^"
+  }
+ },
+ {
+  "id": 6,
+  "priority": 1,
+  "action": {
+   "type": "block"
+  },
+  "condition": {
+   "initiatorDomains": [
+    "aulas.descomplica.com.br"
+   ],
+   "urlFilter": "||cdn.jsdelivr.net/npm/smartbanner.js"
+  }
+ },
+ {
+  "id": 7,
+  "priority": 1,
+  "action": {
+   "type": "block"
+  },
+  "condition": {
+   "initiatorDomains": [
+    "aulas.descomplica.com.br"
+   ],
+   "urlFilter": "||vlibras.gov.br^"
+  }
+ },
+ {
+  "id": 8,
+  "priority": 1,
+  "action": {
+   "type": "block"
+  },
+  "condition": {
+   "initiatorDomains": [
+    "aulas.descomplica.com.br"
+   ],
+   "urlFilter": "||cdn.jsdelivr.net/gh/spbgovbr-vlibras"
+  }
+ },
+ {
+  "id": 9,
+  "priority": 1,
+  "action": {
+   "type": "block"
+  },
+  "condition": {
+   "initiatorDomains": [
+    "aulas.descomplica.com.br"
+   ],
+   "urlFilter": "||mixpanel.paas.descomplica.com.br^"
+  }
+ }
+]
