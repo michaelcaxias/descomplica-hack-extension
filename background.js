@@ -14,9 +14,10 @@ chrome.runtime.onInstalled.addListener(async () => {
     applyOptimize();
     // Configura V2 por padrão caso não tenha nada no Local Storage
     const data = await chrome.storage.local.get('version');
-    const version = data.version || 'v2';
+    // O modo "Legado" (v1) foi removido: migra quem o tinha salvo para o modo atual.
+    const version = (data.version === 'v1' ? 'v2' : data.version) || 'v2';
 
-    if (!data.version) {
+    if (data.version !== version) {
         await chrome.storage.local.set({ version });
     }
 
@@ -45,21 +46,8 @@ async function updateContentScripts(version) {
         console.error("Error clearing scripts:", e);
     }
 
-    // Registra V1 - Roda em modo ISOLATED e escuta API Network (DOM Lifecycle Inicial)
-    if (version === 'v1') {
-        try {
-            await chrome.scripting.registerContentScripts([{
-                id: "v1-scripts",
-                matches: ["*://aulas.descomplica.com.br/*"],
-                js: ["v1/content.js"],
-                runAt: "document_start",
-                world: "ISOLATED"
-            }]);
-            console.log("V1 (Network Request Interceptor) Applied");
-        } catch (e) { console.error('Error injecting V1:', e); }
-
-        // Registra V2 - Roda no MAIN Object Context com Mutation Observer & Vue Factory (DOM Lifecycle Final)
-    } else if (version === 'v2') {
+    // Registra V2 - Roda no MAIN Object Context com Mutation Observer & Vue Factory (DOM Lifecycle Final)
+    if (version === 'v2') {
         try {
             await chrome.scripting.registerContentScripts([{
                 id: "v2-scripts",

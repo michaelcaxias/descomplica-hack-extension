@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "Descomplica Hack",
     "version": "2.2.0",
-    "description": "Menu de alternância entre as táticas V1 (Network) e V2 (Design Patterns Vue)",
+    "description": "Destaca e seleciona as respostas nos exercícios da Descomplica, com opção de otimizar o carregamento das páginas.",
     "permissions": [
         "storage",
         "scripting",
@@ -19,16 +19,6 @@
     "action": {
         "default_popup": "popup.html"
     },
-    "web_accessible_resources": [
-        {
-            "resources": [
-                "v1/injected.js"
-            ],
-            "matches": [
-                "*://aulas.descomplica.com.br/*"
-            ]
-        }
-    ],
     "declarative_net_request": {
         "rule_resources": [
             {
