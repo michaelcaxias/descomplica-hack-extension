@@ -4,7 +4,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     const warning = document.getElementById('reload-warning');
 
     // Recupera configurações correntes gravadas na memótia local (Service Worker)
-    const { version, autoConfirm } = await chrome.storage.local.get(['version', 'autoConfirm']);
+    const { version, autoConfirm, optimize } = await chrome.storage.local.get(['version', 'autoConfirm', 'optimize']);
+    const optimizeBox = document.getElementById('optimize');
+    optimizeBox.checked = optimize === true;
+    optimizeBox.addEventListener('change', async (e) => {
+        await chrome.storage.local.set({ optimize: e.target.checked });
+        warning.style.display = 'block';
+    });
 
     // Marca o rádio correspondente (por default, nossa V2)
     const selectedRadio = document.getElementById(version || 'v2');

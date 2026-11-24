@@ -1,0 +1,65 @@
+[
+ {
+  "id": 1,
+  "priority": 1,
+  "action": {
+   "type": "modifyHeaders",
+   "responseHeaders": [
+    {
+     "header": "Cache-Control",
+     "operation": "set",
+     "value": "public, max-age=31536000, immutable"
+    }
+   ]
+  },
+  "condition": {
+   "regexFilter": "^https://aulas\\.descomplica\\.com\\.br/graduacao/(js|css)/[^?]*\\.[0-9a-f]{8}\\.(js|css)$",
+   "resourceTypes": [
+    "script",
+    "stylesheet"
+   ]
+  }
+ },
+ {
+  "id": 2,
+  "priority": 1,
+  "action": {
+   "type": "modifyHeaders",
+   "responseHeaders": [
+    {
+     "header": "Cache-Control",
+     "operation": "set",
+     "value": "public, max-age=31536000, immutable"
+    }
+   ]
+  },
+  "condition": {
+   "regexFilter": "^https://personal-prof\\.ug\\.descomplica\\.com\\.br/v/[^/]+/static/(js|css)/[^/?]*\\.[0-9a-f]{8}\\.chunk\\.(js|css)$",
+   "resourceTypes": [
+    "script",
+    "stylesheet"
+   ]
+  }
+ },
+ {
+  "id": 3,
+  "priority": 1,
+  "action": {
+   "type": "modifyHeaders",
+   "responseHeaders": [
+    {
+     "header": "Cache-Control",
+     "operation": "set",
+     "value": "public, max-age=31536000, immutable"
+    }
+   ]
+  },
+  "condition": {
+   "regexFilter": "^https://mf-ai-summaries\\.ug\\.descomplica\\.com\\.br/ai-summaries-prd/(js|css)/[^/?]*\\.[0-9a-f]{8}\\.(js|css)$",
+   "resourceTypes": [
+    "script",
+    "stylesheet"
+   ]
+  }
+ }
+]

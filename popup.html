@@ -189,6 +189,44 @@
             line-height: 1.35;
         }
 
+        .perf {
+            margin-top: 16px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            background: #fffaf0;
+            border: 1px solid #fbd38d;
+            border-radius: 10px;
+            padding: 10px 12px;
+            cursor: pointer;
+        }
+
+        .perf input[type="checkbox"] {
+            appearance: auto;
+            -webkit-appearance: checkbox;
+            width: 16px;
+            height: 16px;
+            margin-top: 2px;
+            accent-color: #dd6b20;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .perf span {
+            font-size: 13px;
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .perf small {
+            display: block;
+            margin-top: 2px;
+            font-weight: 400;
+            font-size: 11px;
+            color: #718096;
+            line-height: 1.35;
+        }
+
         .warning {
             font-size: 12px;
             font-weight: 500;
@@ -220,7 +258,7 @@
 
     <div class="header">
         <h2>Descomplica Hack 🚀</h2>
-        <span class="version-badge">v2.1.1</span>
+        <span class="version-badge">v2.2.0</span>
     </div>
     <p class="subtitle">Escolha o modo de funcionamento do ajudante.</p>
 
@@ -256,6 +294,14 @@
         </label>
     </div>
 
+    <label class="perf" for="optimize">
+        <input type="checkbox" id="optimize" name="optimize">
+        <div>
+            <span>⚡ Otimizar página</span>
+            <small>Carrega o site mais rápido (corta scripts de terceiros, carrega o player só nas aulas, cache dos arquivos) e faz Voltar/Avançar do navegador andarem entre as etapas da aula. Atalhos: [ e ].</small>
+        </div>
+    </label>
+
     <div id="reload-warning" class="warning">
         🔄 Favor recarregar a tela (F5) para aplicar!
     </div>
@@ -263,4 +309,4 @@
     <script src="popup.js"></script>
 </body>
 
-</html>
+</html>

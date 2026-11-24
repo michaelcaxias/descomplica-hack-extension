@@ -1,4 +1,17 @@
+// "Otimizar página": liga/desliga os rulesets DNR conforme a flag `optimize` (padrão: desligado).
+async function applyOptimize() {
+    const { optimize } = await chrome.storage.local.get('optimize');
+    const ids = ['opt_kaltura', 'opt_block3p', 'opt_cache'];
+    try {
+        await chrome.declarativeNetRequest.updateEnabledRulesets(
+            optimize === true ? { enableRulesetIds: ids } : { disableRulesetIds: ids }
+        );
+    } catch (e) { console.error('Error applying optimizer rulesets:', e); }
+}
+chrome.runtime.onStartup.addListener(applyOptimize);
+
 chrome.runtime.onInstalled.addListener(async () => {
+    applyOptimize();
     // Configura V2 por padrão caso não tenha nada no Local Storage
     const data = await chrome.storage.local.get('version');
     const version = data.version || 'v2';
@@ -14,6 +27,9 @@ chrome.runtime.onInstalled.addListener(async () => {
 chrome.storage.onChanged.addListener((changes, area) => {
     if (area === 'local' && changes.version) {
         updateContentScripts(changes.version.newValue);
+    }
+    if (area === 'local' && changes.optimize) {
+        applyOptimize();
     }
 });
 
