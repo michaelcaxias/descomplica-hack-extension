@@ -13,7 +13,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     // Marca o rádio correspondente (por default, nossa V2)
-    const selectedRadio = document.getElementById(version || 'v2');
+    // O antigo modo "Legado" (v1) foi removido: quem tinha ele salvo cai no modo atual.
+    const selectedRadio = document.getElementById(version === 'v1' ? 'v2' : (version || 'v2'));
     if (selectedRadio) {
         selectedRadio.checked = true;
     }
