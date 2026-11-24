@@ -43,4 +43,29 @@ document.addEventListener('DOMContentLoaded', async () => {
             warning.style.display = 'block';
         });
     }
+
+    // Aviso de atualização (preenchido pelo background a cada 6 h)
+    const banner = document.getElementById('update-banner');
+    const statusEl = document.getElementById('update-status');
+    const renderUpdate = async () => {
+        const { update } = await chrome.storage.local.get('update');
+        if (!update) { statusEl.textContent = ''; return; }
+        const current = chrome.runtime.getManifest().version;
+        if (update.available) {
+            document.getElementById('update-version').textContent = update.version;
+            document.getElementById('update-zip').href = update.zipUrl;
+            document.getElementById('update-page').href = update.pageUrl;
+            banner.style.display = 'block';
+            statusEl.textContent = '';
+        } else {
+            banner.style.display = 'none';
+            statusEl.textContent = 'v' + current + ' (atualizada) ·';
+        }
+    };
+    await renderUpdate();
+    document.getElementById('update-now').addEventListener('click', async () => {
+        statusEl.textContent = 'Verificando...';
+        await chrome.runtime.sendMessage({ type: 'check-update' });
+        await renderUpdate();
+    });
 });

@@ -78,3 +78,54 @@ async function updateContentScripts(version) {
 
     // Se "off", nós simplismente não registramos nenhum script (apenas deixamos desregistrado e limpo em memória).
 }
+
+// ---- Aviso de atualização -------------------------------------------------
+// Extensão carregada "sem compactação" não se atualiza sozinha. A cada 6 h (e ao instalar/iniciar)
+// consultamos o último release público no GitHub; se for mais novo que o instalado, mostramos um aviso no popup.
+// Só um GET em api.github.com: nada do usuário é enviado.
+const UPDATE_API = 'https://api.github.com/repos/michaelcaxias/descomplica-hack-extension/releases/latest';
+const UPDATE_ALARM = 'check-update';
+
+function isNewer(latest, current) {
+    const a = String(latest).replace(/^v/i, '').split('.').map(n => parseInt(n, 10) || 0);
+    const b = String(current).replace(/^v/i, '').split('.').map(n => parseInt(n, 10) || 0);
+    for (let i = 0; i < Math.max(a.length, b.length); i++) {
+        if ((a[i] || 0) !== (b[i] || 0)) return (a[i] || 0) > (b[i] || 0);
+    }
+    return false;
+}
+
+async function checkUpdate(currentVersion = chrome.runtime.getManifest().version) {
+    try {
+        const res = await fetch(UPDATE_API, { headers: { Accept: 'application/vnd.github+json' } });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const rel = await res.json();
+        const available = isNewer(rel.tag_name, currentVersion);
+        await chrome.storage.local.set({
+            update: {
+                available,
+                version: String(rel.tag_name).replace(/^v/i, ''),
+                name: rel.name || rel.tag_name,
+                pageUrl: rel.html_url,
+                zipUrl: rel.zipball_url,
+                checkedAt: Date.now()
+            }
+        });
+        await chrome.action.setBadgeBackgroundColor({ color: '#dd6b20' });
+        await chrome.action.setBadgeText({ text: available ? '!' : '' });
+        return available;
+    } catch (e) {
+        console.warn('Update check failed:', e);
+        return false;
+    }
+}
+
+function scheduleUpdateChecks() {
+    chrome.alarms.create(UPDATE_ALARM, { delayInMinutes: 1, periodInMinutes: 360 });
+}
+chrome.alarms.onAlarm.addListener((alarm) => { if (alarm.name === UPDATE_ALARM) checkUpdate(); });
+chrome.runtime.onInstalled.addListener(scheduleUpdateChecks);
+chrome.runtime.onStartup.addListener(scheduleUpdateChecks);
+chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
+    if (msg && msg.type === 'check-update') { checkUpdate().then(() => sendResponse({ ok: true })); return true; }
+});

@@ -1,17 +1,19 @@
 {
     "manifest_version": 3,
     "name": "Descomplica Hack",
-    "version": "2.2.0",
+    "version": "2.3.0",
     "description": "Destaca e seleciona as respostas nos exercícios da Descomplica, com opção de otimizar o carregamento das páginas.",
     "permissions": [
         "storage",
         "scripting",
-        "declarativeNetRequest"
+        "declarativeNetRequest",
+        "alarms"
     ],
     "host_permissions": [
         "*://aulas.descomplica.com.br/*",
         "*://*.descomplica.com.br/*",
-        "https://cdnapisec.kaltura.com/*"
+        "https://cdnapisec.kaltura.com/*",
+        "https://api.github.com/*"
     ],
     "background": {
         "service_worker": "background.js"
