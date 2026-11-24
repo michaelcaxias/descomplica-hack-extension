@@ -6,12 +6,14 @@
     "permissions": [
         "storage",
         "scripting",
-        "declarativeNetRequest"
+        "declarativeNetRequest",
+        "alarms"
     ],
     "host_permissions": [
         "*://aulas.descomplica.com.br/*",
         "*://*.descomplica.com.br/*",
-        "https://cdnapisec.kaltura.com/*"
+        "https://cdnapisec.kaltura.com/*",
+        "https://api.github.com/*"
     ],
     "background": {
         "service_worker": "background.js"

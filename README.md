@@ -38,6 +38,9 @@ Um checkbox à parte, independente do motor escolhido (e do modo "Desligar"), qu
 
 Nas medições (Brave 153, carga fria) o DOMContentLoaded caiu ~40% e a página de disciplinas baixou ~16% menos bytes. O chunk principal do site (~5 MB) não dá para remover pela extensão.
 
+### 🆕 Aviso de atualização
+Como a extensão é carregada "sem compactação", o navegador não a atualiza sozinho. A cada 6 horas ela consulta o último release público deste repositório (um único `GET` em `api.github.com`, sem enviar nada seu). Quando existe versão mais nova, o ícone ganha um `!` e o popup mostra um aviso com o botão **Baixar**. Para atualizar: baixe o zip, extraia por cima da pasta da extensão e clique em recarregar em `chrome://extensions`. Também dá para clicar em **Verificar atualização** no popup.
+
 > **🔄 Ao trocar de modo:** recarregue a tela (F5) do Descomplica para a mudança valer.
 
 ## ⚙️ O Motor (Architecture)
